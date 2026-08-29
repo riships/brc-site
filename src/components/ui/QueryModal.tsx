@@ -69,10 +69,14 @@ export function QueryModal() {
         setStatus("error");
         setErrorMessage(data.error || "Failed to submit enquiry. Please try again.");
       }
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
-      setErrorMessage("Network error occurred. Please email us directly at contact@brc-tech.com");
+    } catch {
+      // Fallback for static export (GitHub Pages) — open mailto
+      const subject = encodeURIComponent(`BRC Enquiry: ${formData.need}`);
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company || "N/A"}\nPhone: ${formData.phone || "N/A"}\nService: ${formData.need}\n\nMessage:\n${formData.message}`
+      );
+      window.open(`mailto:contact@brc-tech.com?subject=${subject}&body=${body}`, "_blank");
+      setStatus("success");
     }
   };
 

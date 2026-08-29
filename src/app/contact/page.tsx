@@ -53,10 +53,14 @@ export default function ContactPage() {
         setStatus("error");
         setErrorMessage(data.error || "Failed to submit form. Please try again.");
       }
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
-      setErrorMessage("Network error occurred. Please try again or email us directly.");
+    } catch {
+      // Fallback for static export (GitHub Pages) — open mailto
+      const subject = encodeURIComponent(`BRC Contact: ${formData.service || "General"}`);
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company || "N/A"}\nPhone: ${formData.phone || "N/A"}\nService: ${formData.service || "N/A"}\n\nMessage:\n${formData.message}`
+      );
+      window.open(`mailto:contact@brc-tech.com?subject=${subject}&body=${body}`, "_blank");
+      setStatus("success");
     }
   };
 
