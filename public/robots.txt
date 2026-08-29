@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://riships.github.io/brc-site/sitemap.xml
