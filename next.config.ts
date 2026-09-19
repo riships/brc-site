@@ -1,11 +1,12 @@
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_ENV === "production";
+const isGithubPages = process.env.GITHUB_PAGES === "true";
+const basePath = process.env.BASE_PATH || (isGithubPages ? "/brc-site" : "");
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: isProd ? "/brc-site" : "",
-  assetPrefix: isProd ? "/brc-site/" : "",
+  basePath: basePath,
+  assetPrefix: basePath ? `${basePath}/` : undefined,
   images: {
     unoptimized: true,
   },
